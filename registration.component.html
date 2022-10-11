@@ -1,0 +1,50 @@
+<div class="container col-md-4">
+    <h1 style="color:rebeccapurple">Registration Form</h1>
+    <form (ngSubmit)="userRegister()">
+        
+        <small class="text-danger">{{msg}}</small>
+        <div class="form-outline mb-4" >
+          <label for="email">Email</label>
+        
+          <input type="email" class="form-control" placeholder="Email Address" name="email" [(ngModel)]="user.emailId" 
+          required pattern="^\w+@[a-zA-Z_0-9]+?\.[a-zA-Z]{2,3}$"
+          #email="ngModel" [class.is-invalid]="email.invalid && email.touched"
+          >
+          <!-- <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email_Id is required</small> -->
+          <!-- <div *ngIf="email.errors && (email.invalid && email.touched)">
+              <small class="text-danger" *ngIf="['email.errors.required']">EmailId is required</small>
+              <small class="text-danger" *ngIf="['email.errors.pattern']">Enter Valid Email_Id</small>
+          </div> -->
+          <div *ngIf="(email.invalid && email.touched) || email.dirty">
+              <small *ngIf="email.errors?.['required']" class="text-danger">Email_Id is required</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <small *ngIf="email.errors?.['pattern']" class="text-danger">Please provide a valid email address</small>
+            </div>
+        </div>
+         <div class="form-outline mb-4">
+            <label for="exampleFormControlInput1" class="form-label">Name</label>
+            <input type="text" class="form-control" placeholder="User Name" name="userName" [(ngModel)]="user.userName" #userName="ngModel"
+            [class.is-invalid]="userName.invalid && userName.touched" >
+            <small class="text-danger" [class.d-none]="userName.valid || userName.untouched">User Name is required</small>
+         </div>
+        <div class="form-outline mb-4">
+            <label for="exampleFormControlInput1" class="form-label">Password</label>
+            <input  type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="user.password" #password="ngModel" required
+            [class.is-invalid]="password.invalid && password.touched">
+            <small class="text-danger" [class.d-none]="password.valid || password.untouched">Password required</small>
+          </div>
+         <div class="form-outline mb-4">
+            <label style="color:red ;" for="exampleFormControlInput1" class="form-label">Confirm Password</label>
+            <input  type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" required
+            [class.is-invalid]="confirmPassword.invalid && confirmPassword.touched">
+            <small class="text-danger" [class.d-none]="confirmPassword.valid || confirmPassword.untouched">Password required</small>
+          </div>
+          <div *ngIf="confirmPassword.touched && confirmPassword.invalid" class="alert alert-danger">
+            <div *ngIf="['confirmPassword.errors.required']">Password is required.</div>
+            <div *ngIf="['confirmPassword.errors.confirmedValidator']">Password and Confirm Password must be match.</div>
+        </div>
+
+          <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+
